@@ -36,6 +36,7 @@ VALUES ('Paladin'), ('Ranger'), ('Warlock'), ('Sorcerer'),
 	('Monk'), ('Bard'), ('Rogue'), ('Artificer');
 
 SELECT * FROM classes;
+SELECT * FROM characters;
 
 
 

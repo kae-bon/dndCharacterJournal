@@ -1,7 +1,10 @@
-package com.kae.Models;
+package com.kae.Application;
 
 import com.kae.DAO.JdbcCharacterDAO;
 import com.kae.DAO.JdbcClassesDAO;
+import com.kae.Models.ClassModel;
+import com.kae.Models.PlayerCharacter;
+import com.kae.Models.UserInterface;
 import com.kae.View;
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -56,7 +59,7 @@ public class GenerateCharacter {
 
     public PlayerCharacter createNewCharacter() {
         PlayerCharacter pc = ui.promptForNewCharacter();
-        return characterDAO.createCharacter(pc, "x");
+        return characterDAO.createCharacter(pc);
     }
 
     public PlayerCharacter handlesCharacterRetrieval(int id) {

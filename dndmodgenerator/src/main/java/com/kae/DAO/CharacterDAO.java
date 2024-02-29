@@ -16,10 +16,13 @@ public interface CharacterDAO {
     /**
      * Adds new character to database
      **/
-    public PlayerCharacter createCharacter(PlayerCharacter character, String charClass);
+    public PlayerCharacter createCharacter(PlayerCharacter character);
     /**
      * Updates pre-existing character
      **/
     public PlayerCharacter updateCharacter(PlayerCharacter character);
-
+    /**
+     * Deletes existing character by id
+    **/
+    public int deleteCharacterById(int id);
 }

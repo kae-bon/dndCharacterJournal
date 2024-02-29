@@ -9,7 +9,6 @@ public class PlayerCharacter {
     private String name;
     private String charRace;
     private int level;
-
     private List<ClassModel> classes;
 
     private
@@ -17,10 +16,11 @@ public class PlayerCharacter {
 
     // Constructor
 
-    public PlayerCharacter(String name, String race, int level) {
+    public PlayerCharacter(int id, String name, String race, int level) {
         this.name = name;
         this.charRace = race;
         this.level = level;
+        this.id = id;
     }
     public PlayerCharacter(){}
 

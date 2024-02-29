@@ -21,7 +21,7 @@ public class JdbcCharacterDAO implements CharacterDAO{
 
     @Override
     public PlayerCharacter getCharacterById(int id) {
-        PlayerCharacter pc = new PlayerCharacter();
+        PlayerCharacter pc = null;
         String sql = "SELECT id, name, race, level\n" +
                 "FROM characters\n" +
                 "WHERE id = ?;";
@@ -55,19 +55,15 @@ public class JdbcCharacterDAO implements CharacterDAO{
     }
 
     @Override
-    public PlayerCharacter createCharacter(PlayerCharacter character, String charClass) {
+    public PlayerCharacter createCharacter(PlayerCharacter character) {
         PlayerCharacter pc = null;
         String sql = "INSERT INTO characters(name, race, level)\n" +
                 "VALUES (?, ?, ?)\n" +
                 "RETURNING id;";
         try {
-            int charId = jdbc.queryForObject(sql,
-                    int.class,
-                    character.getName(),
-                    character.getCharRace(),
-                    character.getLevel());
+            int charId = jdbc.queryForObject(sql, int.class, character.getName(), character.getCharRace(), character.getLevel());
             pc = this.getCharacterById(charId);
-            linkCharacterClass(pc.getId(), charClass);
+//            linkCharacterClass(pc.getId(), charClass);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -83,7 +79,7 @@ public class JdbcCharacterDAO implements CharacterDAO{
                 "SET name=?, race=?, level=?\n" +
                 "WHERE id = ?;";
         try {
-            int numRows = jdbc.update(sql, character.getName(), character.getCharRace(), character.getLevel());
+            int numRows = jdbc.update(sql, character.getName(), character.getCharRace(), character.getLevel(), character.getId());
             if (numRows == 0) {
                 throw new DaoException("Zero rows affected, expected at least one");
             } else {
@@ -95,6 +91,18 @@ public class JdbcCharacterDAO implements CharacterDAO{
             throw new DaoException("Data integrity violation", e);
         }
         return pc;
+    }
+
+    @Override
+    public int deleteCharacterById(int id) {
+        String sql = "DELETE FROM characters WHERE id = ?";
+        try {
+            return jdbc.update(sql, id);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
     }
 
     public void linkCharacterClass(int characterId, String charClass) {
