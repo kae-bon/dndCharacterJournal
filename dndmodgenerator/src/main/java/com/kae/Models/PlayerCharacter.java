@@ -1,30 +1,24 @@
-package com.kae.character;
-
-import com.kae.abilityscores.AbilityScore;
+package com.kae.Models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class PlayerCharacter {
 
     private int id;
     private String name;
-    private String charClass;
     private String charRace;
     private int level;
 
-    private int classId;
+    private List<ClassModel> classes;
 
     private
     List<AbilityScore> abilityScores = new ArrayList<>();
 
     // Constructor
 
-    public PlayerCharacter(String name, String startingClass, String race, int level) {
+    public PlayerCharacter(String name, String race, int level) {
         this.name = name;
-        this.charClass = startingClass;
         this.charRace = race;
         this.level = level;
     }
@@ -45,24 +39,16 @@ public class PlayerCharacter {
         this.id = id;
     }
 
-    public String getCharClass() {
-        return charClass;
-    }
-
-    public void setCharClass(String startingClass) {
-        this.charClass = startingClass;
-    }
-
     public List<AbilityScore> getAbilityScores() {
         return abilityScores;
     }
 
-    public int getClassId() {
-        return classId;
+    public void setClasses(List<ClassModel> classes) {
+        this.classes = classes;
     }
 
-    public void setClassId(int classId) {
-        this.classId = classId;
+    public List<ClassModel> getClasses() {
+        return this.classes;
     }
 
     // Getters and Setters
@@ -99,7 +85,7 @@ public class PlayerCharacter {
     }
 
     public void characterCreated() {
-        System.out.println("You have registered: \n" + "Name: " + name + "\nRace: " + charRace + "\nClass: " + charClass + "\nLevel: " + level);
+        System.out.println("You have registered: \n" + "Name: " + name + "\nRace: " + charRace + "\nClass: " + "\nLevel: " + level);
     }
 
     public int getProficiencyBonus() {

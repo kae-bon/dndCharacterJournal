@@ -1,4 +1,4 @@
-package com.kae.abilityscores;
+package com.kae.Exceptions;
 
 public class AbilityScoreException extends RuntimeException {
     public AbilityScoreException() {

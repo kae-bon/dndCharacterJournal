@@ -1,8 +1,7 @@
 package com.kae.DAO;
 
 import com.kae.Exceptions.DaoException;
-import com.kae.character.PCClass;
-import org.springframework.dao.DataIntegrityViolationException;
+import com.kae.Models.ClassModel;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -18,44 +17,43 @@ public class JdbcClassesDAO implements ClassesDAO {
         this.jdbc = new JdbcTemplate(datasource);
     }
     @Override
-    public PCClass getClassById(int id) {
-        PCClass pcClass = new PCClass();
+    public ClassModel getClassById(int id) {
+        ClassModel classModel = new ClassModel();
         String sql = "SELECT id, class_name\n" +
                 "FROM classes\n" +
                 "WHERE id = ?";
         try {
             SqlRowSet results = jdbc.queryForRowSet(sql, id);
             if (results.next()) {
-                pcClass = mapRowToPcClass(results);
+                classModel = mapRowToPcClass(results);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
-
-        return pcClass;
+        return classModel;
     }
 
     @Override
-    public List<PCClass> getClasses() {
-        List<PCClass> pcClasses = new ArrayList<>();
+    public List<ClassModel> getClasses() {
+        List<ClassModel> classModels = new ArrayList<>();
         String sql = "SELECT id, class_name\n" +
                 "FROM classes;";
         try {
             SqlRowSet results = jdbc.queryForRowSet(sql);
             while (results.next()) {
-                pcClasses.add(mapRowToPcClass(results));
+                classModels.add(mapRowToPcClass(results));
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
 
-        return pcClasses;
+        return classModels;
     }
 
-    public PCClass mapRowToPcClass(SqlRowSet results) {
-        PCClass pcClass = new PCClass();
-        pcClass.setId(results.getInt("id"));
-        pcClass.setName(results.getString("class_name"));
-        return pcClass;
+    public ClassModel mapRowToPcClass(SqlRowSet results) {
+        ClassModel classModel = new ClassModel();
+        classModel.setId(results.getInt("id"));
+        classModel.setName(results.getString("class_name"));
+        return classModel;
     }
 }

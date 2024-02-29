@@ -1,17 +1,17 @@
-package com.kae.character;
+package com.kae.Models;
 
-import com.kae.DAO.CharacterDAO;
 import com.kae.DAO.JdbcCharacterDAO;
 import com.kae.DAO.JdbcClassesDAO;
+import com.kae.View;
 import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.sql.DataSource;
-import java.util.Scanner;
 
 public class GenerateCharacter {
     UserInterface ui = new UserInterface();
     JdbcCharacterDAO characterDAO;
     JdbcClassesDAO classDAO;
+    View view = new View();
 
     public static void main(String[] args) {
         BasicDataSource dataSource = new BasicDataSource();
@@ -28,20 +28,18 @@ public class GenerateCharacter {
     }
 
     public void run() {
-        ui.speak(welcome());
+        ui.speak(view.welcome());
         boolean running = true;
-        PlayerCharacter pc;
+        PlayerCharacter pc = null;
+
         while (running) {
-            ui.speak(mainMenu());
+            ui.speak(view.mainMenu());
             int userChoice = ui.promptUser();
             if (userChoice == 1) {
-                pc = ui.promptForNewCharacter();
-                handlesNewCharacterCreation(pc);
+                pc = createNewCharacter();
+                view.viewCharacter(pc);
             } else if (userChoice == 2) {
                 ui.displayCharacters(characterDAO.getCharacters());
-                pc = characterDAO.getCharacterById(ui.promptForInt());
-                PCClass charClass = handlesClassRetrieval(pc.getClassId());
-                ui.displayCharacter(pc, charClass);
             } else if (userChoice == 3) {
 
             } else if (userChoice == 4) {
@@ -54,30 +52,18 @@ public class GenerateCharacter {
         }
     }
 
-    public String mainMenu() {
-        return String.format("What would you like to do?\n" +
-                "(1) Register Character\n" +
-                "(2) Access Character\n" +
-                "(3) Get Random Character\n" +
-                "(4) Get List of Characters\n" +
-                "(5) Exit\n");
-    }
 
-    public String welcome() {
-        return String.format("-----------------------------------------\n" +
-                "| Welcome to the D&D Character Creator! |\n" +
-                "-----------------------------------------\n");
-    }
 
-    public void handlesNewCharacterCreation(PlayerCharacter pc) {
-        characterDAO.createCharacter(pc, pc.getCharClass());
+    public PlayerCharacter createNewCharacter() {
+        PlayerCharacter pc = ui.promptForNewCharacter();
+        return characterDAO.createCharacter(pc, "x");
     }
 
     public PlayerCharacter handlesCharacterRetrieval(int id) {
         return characterDAO.getCharacterById(id);
     }
 
-    public PCClass handlesClassRetrieval(int id) {
+    public ClassModel handlesClassRetrieval(int id) {
         return classDAO.getClassById(id);
     }
 

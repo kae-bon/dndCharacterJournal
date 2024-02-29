@@ -1,5 +1,4 @@
-import com.kae.abilityscores.AbilityScore;
-import com.kae.abilityscores.AbilityScoreException;
+import com.kae.Models.AbilityScore;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.kae.DAO;
 
-import com.kae.character.PlayerCharacter;
+import com.kae.Models.PlayerCharacter;
 
 import java.util.List;
 

@@ -1,8 +1,7 @@
 package com.kae.DAO;
 
 import com.kae.Exceptions.DaoException;
-import com.kae.character.PlayerCharacter;
-import org.apache.commons.dbcp2.BasicDataSource;
+import com.kae.Models.PlayerCharacter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,7 +22,7 @@ public class JdbcCharacterDAO implements CharacterDAO{
     @Override
     public PlayerCharacter getCharacterById(int id) {
         PlayerCharacter pc = new PlayerCharacter();
-        String sql = "SELECT id, name, race, level, class_id\n" +
+        String sql = "SELECT id, name, race, level\n" +
                 "FROM characters\n" +
                 "WHERE id = ?;";
         try {
@@ -42,7 +41,7 @@ public class JdbcCharacterDAO implements CharacterDAO{
     @Override
     public List<PlayerCharacter> getCharacters() {
         List<PlayerCharacter> characters = new ArrayList<>();
-        String sql = "SELECT id, name, race, level, class_id\n" +
+        String sql = "SELECT id, name, race, level\n" +
                 "FROM characters;";
         try {
             SqlRowSet results = jdbc.queryForRowSet(sql);
@@ -58,17 +57,17 @@ public class JdbcCharacterDAO implements CharacterDAO{
     @Override
     public PlayerCharacter createCharacter(PlayerCharacter character, String charClass) {
         PlayerCharacter pc = null;
-        String sql = "INSERT INTO characters(name, race, level, class_id)\n" +
-                "VALUES (?, ?, ?, (SELECT id FROM classes WHERE class_name = ?))\n" +
+        String sql = "INSERT INTO characters(name, race, level)\n" +
+                "VALUES (?, ?, ?)\n" +
                 "RETURNING id;";
         try {
             int charId = jdbc.queryForObject(sql,
                     int.class,
                     character.getName(),
                     character.getCharRace(),
-                    character.getLevel(),
-                    charClass);
+                    character.getLevel());
             pc = this.getCharacterById(charId);
+            linkCharacterClass(pc.getId(), charClass);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -98,14 +97,14 @@ public class JdbcCharacterDAO implements CharacterDAO{
         return pc;
     }
 
-    public void linkCharacterClass(int characterId, int classId) {
+    public void linkCharacterClass(int characterId, String charClass) {
         String sql = "INSERT INTO character_class(character_id, class_id)\n" +
-                "VALUES (?, ?);";
+                "VALUES (?, (SELECT id FROM classes WHERE class_name ILIKE ?));";
         try {
-            jdbc.update(sql, characterId, classId);
+            jdbc.update(sql, characterId, charClass);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {             // these would be errors from foreign key constraints
+        } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
     }
@@ -116,7 +115,6 @@ public class JdbcCharacterDAO implements CharacterDAO{
         character.setId(results.getInt("id"));
         character.setCharRace(results.getString("race"));
         character.setLevel(results.getInt("level"));
-        character.setClassId(results.getInt("class_id"));
         return character;
     }
 

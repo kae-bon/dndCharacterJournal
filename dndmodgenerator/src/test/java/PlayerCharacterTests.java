@@ -1,11 +1,10 @@
-import com.kae.abilityscores.AbilityScore;
-import com.kae.character.PlayerCharacter;
+import com.kae.Models.AbilityScore;
+import com.kae.Models.PlayerCharacter;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class PlayerCharacterTests {
@@ -14,7 +13,7 @@ public class PlayerCharacterTests {
 
     @Before
     public void setup() {
-        character = new PlayerCharacter("Rhys", "Paladin", "Wood Elf", 12);
+        character = new PlayerCharacter("Rhys", "Wood Elf", 12);
     }
 
     public List<AbilityScore> createAbilityScoreList() {
@@ -48,7 +47,7 @@ public class PlayerCharacterTests {
 
     @Test
     public void raise_level_cant_go_above_20() {
-        PlayerCharacter char2 = new PlayerCharacter("XX", "XX", "XX", 19);
+        PlayerCharacter char2 = new PlayerCharacter("XX", "XX", 19);
         char2.raiseLevelByOne();
         Assert.assertEquals(20, char2.getLevel());
 
@@ -61,7 +60,7 @@ public class PlayerCharacterTests {
         int actual = character.getProficiencyBonus();
         Assert.assertEquals(4, actual);
 
-        PlayerCharacter highLevelChar = new PlayerCharacter("X", "X", "X", 20);
+        PlayerCharacter highLevelChar = new PlayerCharacter("X", "X", 20);
         actual = highLevelChar.getProficiencyBonus();
         Assert.assertEquals(6, actual);
     }

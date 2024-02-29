@@ -1,6 +1,6 @@
-package com.kae.character;
+package com.kae.Models;
 
-public class PCClass {
+public class ClassModel {
     private int id;
     private String name;
 

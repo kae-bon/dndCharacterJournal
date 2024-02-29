@@ -1,4 +1,6 @@
-package com.kae.abilityscores;
+package com.kae.Models;
+
+import com.kae.Exceptions.AbilityScoreException;
 
 public class AbilityScore {
     private int score;
