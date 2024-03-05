@@ -4,6 +4,8 @@ public class ClassModel {
     private int id;
     private String name;
 
+    public ClassModel() {}
+
     public int getId() {
         return id;
     }

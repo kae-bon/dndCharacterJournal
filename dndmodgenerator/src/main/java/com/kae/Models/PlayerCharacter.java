@@ -15,7 +15,6 @@ public class PlayerCharacter {
     List<AbilityScore> abilityScores = new ArrayList<>();
 
     // Constructor
-
     public PlayerCharacter(int id, String name, String race, int level) {
         this.name = name;
         this.charRace = race;

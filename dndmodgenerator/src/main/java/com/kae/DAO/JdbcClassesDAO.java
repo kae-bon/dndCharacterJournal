@@ -2,6 +2,7 @@ package com.kae.DAO;
 
 import com.kae.Exceptions.DaoException;
 import com.kae.Models.ClassModel;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -18,14 +19,14 @@ public class JdbcClassesDAO implements ClassesDAO {
     }
     @Override
     public ClassModel getClassById(int id) {
-        ClassModel classModel = new ClassModel();
+        ClassModel classModel = null;
         String sql = "SELECT id, class_name\n" +
                 "FROM classes\n" +
                 "WHERE id = ?";
         try {
             SqlRowSet results = jdbc.queryForRowSet(sql, id);
             if (results.next()) {
-                classModel = mapRowToPcClass(results);
+                classModel = mapRowToClass(results);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -41,7 +42,7 @@ public class JdbcClassesDAO implements ClassesDAO {
         try {
             SqlRowSet results = jdbc.queryForRowSet(sql);
             while (results.next()) {
-                classModels.add(mapRowToPcClass(results));
+                classModels.add(mapRowToClass(results));
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -50,7 +51,27 @@ public class JdbcClassesDAO implements ClassesDAO {
         return classModels;
     }
 
-    public ClassModel mapRowToPcClass(SqlRowSet results) {
+    @Override
+    public List<ClassModel> getClassesByCharacterId(int id) {
+        List<ClassModel> classes = new ArrayList<>();
+        String sql = "SELECT id, class_name\n" +
+                "FROM classes\n" +
+                "JOIN character_class AS cc ON cc.class_id = classes.id\n" +
+                "WHERE cc.character_id = ?;";
+        try {
+            SqlRowSet results = jdbc.queryForRowSet(sql, id);
+            while (results.next()) {
+                classes.add(mapRowToClass(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return classes;
+    }
+
+    public ClassModel mapRowToClass(SqlRowSet results) {
         ClassModel classModel = new ClassModel();
         classModel.setId(results.getInt("id"));
         classModel.setName(results.getString("class_name"));

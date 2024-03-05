@@ -39,7 +39,7 @@ public class GenerateCharacter {
             ui.speak(view.mainMenu());
             int userChoice = ui.promptUser();
             if (userChoice == 1) {
-                pc = createNewCharacter();
+                pc = handlesRegisterCharacter();
                 view.viewCharacter(pc);
             } else if (userChoice == 2) {
                 ui.displayCharacters(characterDAO.getCharacters());
@@ -55,9 +55,7 @@ public class GenerateCharacter {
         }
     }
 
-
-
-    public PlayerCharacter createNewCharacter() {
+    public PlayerCharacter handlesRegisterCharacter() {
         PlayerCharacter pc = ui.promptForNewCharacter();
         return characterDAO.createCharacter(pc);
     }

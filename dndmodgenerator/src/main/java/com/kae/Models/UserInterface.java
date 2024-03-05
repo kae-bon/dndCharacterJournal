@@ -62,7 +62,7 @@ public class UserInterface {
 
         while (classes.isEmpty()) {
             speak("\nWhat are your character's classes?\n" +
-                    "Please enter them separated by commas with no spaces.\n" +
+                    "Please enter them separated by commas.\n" +
                     "Example: Paladin,Bard");
             String classString = promptForString("Classes");
 
@@ -78,21 +78,5 @@ public class UserInterface {
         speak("");
     }
 
-    public List<ClassModel> parseClassesIntoList(String classString) {
-        List<ClassModel> classes = new ArrayList<>();
-        String[] classArray = classString.split(",");
-        for (String charClass : classArray) {
-
-        }
-        return classes;
-    }
-
-//    public void displayCharacter(PlayerCharacter pc) {
-//        speak(String.format("\n(%d) %s\n" +
-//                        "Class: %s\n" +
-//                        "Level: %d\n" + "Race: %s\n",
-//                        pc.getId(), pc.getName(), pc.getCharClass(),
-//                        pc.getLevel(), pc.getCharRace()));
-//    }
 
 }

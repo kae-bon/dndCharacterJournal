@@ -1,6 +1,7 @@
 package com.kae.DAO;
 
 import com.kae.Exceptions.DaoException;
+import com.kae.Models.ClassModel;
 import com.kae.Models.PlayerCharacter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -63,7 +64,6 @@ public class JdbcCharacterDAO implements CharacterDAO{
         try {
             int charId = jdbc.queryForObject(sql, int.class, character.getName(), character.getCharRace(), character.getLevel());
             pc = this.getCharacterById(charId);
-//            linkCharacterClass(pc.getId(), charClass);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -95,8 +95,11 @@ public class JdbcCharacterDAO implements CharacterDAO{
 
     @Override
     public int deleteCharacterById(int id) {
+        String deleteSql = "DELETE FROM character_class WHERE character_id = " +
+                "(SELECT character_id FROM characters WHERE id = ?);";
         String sql = "DELETE FROM characters WHERE id = ?";
         try {
+            jdbc.update(deleteSql, id);
             return jdbc.update(sql, id);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);

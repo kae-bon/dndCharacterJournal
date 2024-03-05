@@ -14,4 +14,6 @@ public interface ClassesDAO {
      **/
     public List<ClassModel> getClasses();
 
+    public List<ClassModel> getClassesByCharacterId(int id);
+
 }

@@ -41,4 +41,9 @@ VALUES ('Paladin'), ('Ranger'), ('Warlock'), ('Sorcerer'),
 	('Wizard'), ('Druid'), ('Fighter'), ('Barbarian'), ('Cleric'),
 	('Monk'), ('Bard'), ('Rogue'), ('Artificer');
 
+INSERT INTO character_class (character_id, class_id)
+VALUES (1, (SELECT id FROM classes WHERE class_name = 'Paladin')),
+(2, (SELECT id FROM classes WHERE class_name = 'Sorcerer')),
+(3, (SELECT id FROM classes WHERE class_name = 'Sorcerer')),
+(3, (SELECT id FROM classes WHERE class_name = 'Druid'));
 COMMIT;
