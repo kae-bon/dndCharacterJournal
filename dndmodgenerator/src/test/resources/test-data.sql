@@ -37,13 +37,14 @@ VALUES ('Rhys', 'Wood Elf', 12),
 ('Rinn', 'Drow Elf', 12);
 
 INSERT INTO classes (class_name)
-VALUES ('Paladin'), ('Ranger'), ('Warlock'), ('Sorcerer'),
-	('Wizard'), ('Druid'), ('Fighter'), ('Barbarian'), ('Cleric'),
-	('Monk'), ('Bard'), ('Rogue'), ('Artificer');
+VALUES ('paladin'), ('ranger'), ('warlock'), ('sorcerer'),
+	('wizard'), ('druid'), ('fighter'), ('barbarian'), ('cleric'),
+	('monk'), ('bard'), ('rogue'), ('artificer');
 
 INSERT INTO character_class (character_id, class_id)
-VALUES (1, (SELECT id FROM classes WHERE class_name = 'Paladin')),
-(2, (SELECT id FROM classes WHERE class_name = 'Sorcerer')),
-(3, (SELECT id FROM classes WHERE class_name = 'Sorcerer')),
-(3, (SELECT id FROM classes WHERE class_name = 'Druid'));
+VALUES (1, (SELECT id FROM classes WHERE class_name = 'paladin')),
+(2, (SELECT id FROM classes WHERE class_name = 'sorcerer')),
+(3, (SELECT id FROM classes WHERE class_name = 'sorcerer')),
+(3, (SELECT id FROM classes WHERE class_name = 'druid'));
+
 COMMIT;

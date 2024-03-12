@@ -1,10 +1,13 @@
 package com.kae.Models;
 
-public class ClassModel {
+public class PcClass {
     private int id;
     private String name;
 
-    public ClassModel() {}
+    public PcClass(String name, int id) {
+        this.id = id;
+        this.name = name;
+    }
 
     public int getId() {
         return id;
@@ -16,10 +19,6 @@ public class ClassModel {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
 }

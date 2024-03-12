@@ -1,7 +1,6 @@
 package com.kae.DAO;
 
 import com.kae.Exceptions.DaoException;
-import com.kae.Models.ClassModel;
 import com.kae.Models.PlayerCharacter;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;

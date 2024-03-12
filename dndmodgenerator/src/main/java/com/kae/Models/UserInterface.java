@@ -40,7 +40,7 @@ public class UserInterface {
         String name = "";
         String race = "";
         int level = 0;
-        List<ClassModel> classes = new ArrayList<>();
+        List<PcClass> classes = new ArrayList<>();
 
         while (name.isBlank()) {
             speak("\nWhat is your character's name?");

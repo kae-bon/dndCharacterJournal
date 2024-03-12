@@ -9,7 +9,7 @@ public class PlayerCharacter {
     private String name;
     private String charRace;
     private int level;
-    private List<ClassModel> classes;
+    private List<PcClass> classes;
 
     private
     List<AbilityScore> abilityScores = new ArrayList<>();
@@ -42,11 +42,11 @@ public class PlayerCharacter {
         return abilityScores;
     }
 
-    public void setClasses(List<ClassModel> classes) {
+    public void setClasses(List<PcClass> classes) {
         this.classes = classes;
     }
 
-    public List<ClassModel> getClasses() {
+    public List<PcClass> getClasses() {
         return this.classes;
     }
 
