@@ -35,40 +35,40 @@ public class UserInterface {
         return property;
     }
 
-    public PlayerCharacter promptForNewCharacter() {
-        PlayerCharacter pc = new PlayerCharacter();
-        String name = "";
-        String race = "";
-        int level = 0;
-        List<PcClass> classes = new ArrayList<>();
-
-        while (name.isBlank()) {
-            speak("\nWhat is your character's name?");
-            name = promptForString("Name");
-        }
-        pc.setName(name);
-
-        while (race.isBlank()) {
-            speak("\nWhat is your character's race?");
-            race = promptForString("Race");
-        }
-        pc.setCharRace(race);
-
-        while (level == 0) {
-            speak("\nWhat is your character's level?");
-            level = promptForInt("Level");
-        }
-        pc.setLevel(level);
-
-        while (classes.isEmpty()) {
-            speak("\nWhat are your character's classes?\n" +
-                    "Please enter them separated by commas.\n" +
-                    "Example: Paladin,Bard");
-            String classString = promptForString("Classes");
-
-        }
-        return pc;
-    }
+//    public PlayerCharacter promptForNewCharacter() {
+//        PlayerCharacter pc = new PlayerCharacter();
+//        String name = "";
+//        String race = "";
+//        int level = 0;
+//        List<PcClass> classes = new ArrayList<>();
+//
+//        while (name.isBlank()) {
+//            speak("\nWhat is your character's name?");
+//            name = promptForString("Name");
+//        }
+//        pc.setName(name);
+//
+//        while (race.isBlank()) {
+//            speak("\nWhat is your character's race?");
+//            race = promptForString("Race");
+//        }
+//        pc.setCharRace(race);
+//
+//        while (level == 0) {
+//            speak("\nWhat is your character's level?");
+//            level = promptForInt("Level");
+//        }
+//        pc.setLevel(level);
+//
+//        while (classes.isEmpty()) {
+//            speak("\nWhat are your character's classes?\n" +
+//                    "Please enter them separated by commas.\n" +
+//                    "Example: Paladin,Bard");
+//            String classString = promptForString("Classes");
+//
+//        }
+//        return pc;
+//    }
 
     public void displayCharacters(List<PlayerCharacter> playerCharacters) {
         speak("\nThese are your currently registered characters:");

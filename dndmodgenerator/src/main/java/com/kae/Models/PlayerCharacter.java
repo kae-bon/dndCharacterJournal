@@ -9,10 +9,9 @@ public class PlayerCharacter {
     private String name;
     private String charRace;
     private int level;
-    private List<PcClass> classes;
-
     private
     List<AbilityScore> abilityScores = new ArrayList<>();
+    private List<PcClass> classes = new ArrayList<>();
 
     // Constructor
     public PlayerCharacter(int id, String name, String race, int level) {
@@ -42,12 +41,12 @@ public class PlayerCharacter {
         return abilityScores;
     }
 
-    public void setClasses(List<PcClass> classes) {
-        this.classes = classes;
+    public List<PcClass> getClasses() {
+        return classes;
     }
 
-    public List<PcClass> getClasses() {
-        return this.classes;
+    public void setClasses(List<PcClass> classes) {
+        this.classes = classes;
     }
 
     // Getters and Setters

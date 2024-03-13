@@ -1,6 +1,9 @@
 package com.kae;
 
+import com.kae.Models.PcClass;
 import com.kae.Models.PlayerCharacter;
+
+import java.util.List;
 
 public class View {
 
@@ -20,8 +23,14 @@ public class View {
     }
 
     public String viewCharacter(PlayerCharacter pc) {
-        return String.format("(%f) %s\n" + "Race: %s\n" + "Level: %s\n",
-                pc.getId(), pc.getName(), pc.getCharRace(), pc.getLevel());
+        List<PcClass> classes = pc.getClasses();
+        StringBuilder classList = new StringBuilder();
+        for (PcClass cl : classes) {
+            classList.append(cl + "\n");
+        }
+
+        return String.format("(%d) %s\n" + "Race: %s\n" + "Level: %s\n" + "Classes: %s",
+                pc.getId(), pc.getName(), pc.getCharRace(), pc.getLevel(), classList);
     }
 
 }

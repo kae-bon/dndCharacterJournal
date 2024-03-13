@@ -108,10 +108,11 @@ public class JdbcCharacterDAO implements CharacterDAO{
     }
 
     public void linkCharacterClass(int characterId, String charClass) {
+        String searchClass = "%" + charClass + "%";
         String sql = "INSERT INTO character_class(character_id, class_id)\n" +
                 "VALUES (?, (SELECT id FROM classes WHERE class_name ILIKE ?));";
         try {
-            jdbc.update(sql, characterId, charClass);
+            jdbc.update(sql, characterId, searchClass);
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
